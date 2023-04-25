@@ -9,14 +9,14 @@ const Register = () => {
 		setEmail(event.target.value);
 	};
 
-	const handlePasswordChange = (e) => {
-		console.log(e.target.value);
+	const handlePasswordChange = (event) => {
+		console.log(event.target.value);
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
-		const email = e.target.email.value;
-		const pass = e.target.password.value;
+		const email = event.target.email.value;
+		const pass = event.target.password.value;
 		console.log(email, pass);
 	};
 	return (
