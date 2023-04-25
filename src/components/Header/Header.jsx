@@ -9,6 +9,7 @@ const Header = () => {
 			<Link to={"login"}>Login</Link>
 			<Link to={"register"}>Register</Link>
 			<Link to={"register-RBS"}>Register-RBS</Link>
+			<Link to={"register-BS"}>Register-BS</Link>
 		</nav>
 	);
 };

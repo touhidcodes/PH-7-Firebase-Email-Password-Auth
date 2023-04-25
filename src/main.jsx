@@ -9,6 +9,7 @@ import Register from "./components/Register/Register.jsx";
 import Login from "./components/Login/Login.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Register_RBS from "./components/Register_RBS/Register-RBS.jsx";
+import Register_BS from "./components/Register_BS/Register_BS.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
 			{
 				path: "/register-RBS",
 				element: <Register_RBS />,
+			},
+			{
+				path: "/register-BS",
+				element: <Register_BS />,
 			},
 		],
 	},
