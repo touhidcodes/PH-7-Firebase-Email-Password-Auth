@@ -1,5 +1,9 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import React, { useState } from "react";
+import {
+	getAuth,
+	sendPasswordResetEmail,
+	signInWithEmailAndPassword,
+} from "firebase/auth";
+import React, { useRef, useState } from "react";
 import app from "../../Firebase/firebase.config";
 import { Link } from "react-router-dom";
 
@@ -7,6 +11,7 @@ const auth = getAuth(app);
 const Login = () => {
 	const [error, setError] = useState("");
 	const [submit, setSubmit] = useState("");
+	const emailRef = useRef();
 
 	const handleSubmit = (event) => {
 		setError("");
@@ -42,6 +47,26 @@ const Login = () => {
 				setError(error.message);
 			});
 	};
+
+
+	const handleReset = () => {
+		const email = emailRef.current.value;
+		if (!email) {
+			setError("please provide email to reset password");
+			return;
+		}
+		sendPasswordResetEmail(auth, email)
+			.then(() => {
+				// Password reset email sent!
+				alert("Password reset email sent!");
+				// ..
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				// ..
+			});
+	};
 	return (
 		<div className='mt-5'>
 			<h3>Login</h3>
@@ -52,6 +77,7 @@ const Login = () => {
 					<input
 						type='email'
 						name='email'
+						ref={emailRef}
 						className='form-control'
 						id='exampleInputEmail1'
 						aria-describedby='emailHelp'
@@ -87,6 +113,14 @@ const Login = () => {
 					Submit
 				</button>
 			</form>
+			<p className='mt-3'>
+				<small>
+					Forgot your password? Please reset...
+					<button className='btn btn-link' onClick={handleReset}>
+						Reset Password
+					</button>
+				</small>
+			</p>
 			<p className='mt-3'>
 				<small>
 					New to this website? Please register...
