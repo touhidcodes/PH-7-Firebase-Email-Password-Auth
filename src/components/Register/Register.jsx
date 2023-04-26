@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import {
 	createUserWithEmailAndPassword,
 	getAuth,
+	sendEmailVerification,
 	signInWithEmailAndPassword,
 } from "firebase/auth";
 import app from "../../Firebase/firebase.config";
+import { Link } from "react-router-dom";
 
 const Register = () => {
 	const auth = getAuth(app);
@@ -28,11 +30,11 @@ const Register = () => {
 		const email = event.target.email.value;
 		const password = event.target.password.value;
 		// Validate Password
-		if (!/(?=.*[A-Z].*[A-Z])/.test(password)) {
+		if (!/(?=.*[A-Z])/.test(password)) {
 			setRegError("Ensure string has two uppercase letters.");
 			return;
 		}
-		if (!/(?=.*[0-9].*[0-9])/.test(password)) {
+		if (!/(?=.*[0-9])/.test(password)) {
 			setRegError("Ensure string has two digits.");
 			return;
 		}
@@ -45,7 +47,7 @@ const Register = () => {
 				setRegError("");
 				event.target.reset();
 				setSuccess("User has been created successfully...");
-				event.target.reset();
+				verifyEmail(loggedUser);
 				// ...
 			})
 			.catch((error) => {
@@ -56,6 +58,13 @@ const Register = () => {
 			});
 	};
 
+	const verifyEmail = (user) => {
+		sendEmailVerification(user).then((result) => {
+			alert("Email verification sent!");
+			// Email verification sent!
+			// ...
+		});
+	};
 	return (
 		<div className='mt-5'>
 			<h3>Please Register</h3>
@@ -87,6 +96,12 @@ const Register = () => {
 					value='Register'
 				/>
 			</form>
+			<p className='mt-3'>
+				<small>
+					Already have an account? Please login...
+					<Link to={"/login"}>Log in</Link>
+				</small>
+			</p>
 			<p className='text-primary mt-3'>{success}</p>
 		</div>
 	);
